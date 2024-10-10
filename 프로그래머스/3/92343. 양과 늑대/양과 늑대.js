@@ -20,51 +20,8 @@ class Queue {
     }
 }
 
-/*
-class Tree {
-    constructor(index, value) {
-        this.index = index;
-        this.value = value;
-        this.children = []
-    }
-    
-    insert(parent, index, value) {
-        if(this.index === parent) {
-        	this.children.push(new Tree(index, value))
-            return true;
-        }
-        
-        for(const child of this.children) {
-            if(child.insert(parent, index, value)) break;
-        }
-        
-        return false;
-    }
-    
-    find(index) {
-        if(this.index === index) return this
-        
-        for(const child of this.children) {
-            const value = child.find(index);
-            if (value) return value
-        }
-            
-        return undefined
-    }
-}
-*/
 
 function solution(info, edges) {
-    /*
-    const tree = new Tree(0, SHEEP)
-    edges.sort((a, b) => a[0] - b[0])
-    
-    for(const [parent, index] of edges) {
-        const value = info[index]
-        tree.insert(parent, index, value)
-    }
-    */
-    
     const tree = {}
     
     for(const [parent, index] of edges) {
@@ -72,7 +29,6 @@ function solution(info, edges) {
         else tree[parent] = [index]
     }
     
-    console.log(tree)
     
     const queue = new Queue()
     queue.push([0, 1, 0, new Set()])
@@ -81,9 +37,9 @@ function solution(info, edges) {
     while(!queue.isEmpty()) {
         const [current, sheep, wolf, visited] = queue.pop()
         sheepBal = sheep > sheepBal ? sheep : sheepBal
-
-        for(const t of tree[current] ?? []) {
-            visited.add(t)
+        
+        for(const child of tree?.[current] ?? []) {
+            visited.add(child)
         }
 
         for(const visit of visited) {
